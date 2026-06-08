@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>BiblioApp Funcional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{--ink:#f5efe6;--ink2:#ede3d5;--ink3:#e0d4c0;--ink4:#d0c3aa;--gold:#8b5e2e;--gold2:#b07d46;--cream:#3b2a1a;--cream2:#4e3a26;--muted:#8f775f;--red:#c0392b;--green:#2e7d4f;--blue:#2563eb;--r:18px;--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}body{min-height:100vh;background:#c8b89a;display:flex;justify-content:center;font-family:Outfit,sans-serif;color:var(--cream);padding:20px 0}#app{width:min(410px,100vw);min-height:780px;background:var(--ink);border-radius:34px;overflow:hidden;border:1px solid var(--ink4);box-shadow:0 30px 80px rgba(70,45,20,.35);position:relative}.screen{display:none;min-height:780px;flex-direction:column}.screen.active{display:flex;animation:in .2s ease}@keyframes in{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:none}}@media(max-width:430px){body{padding:0;background:var(--ink)}#app,.screen{border-radius:0;min-height:100vh}}
+.topbar,.home-head{background:var(--ink2);padding:18px 20px;border-bottom:1px solid rgba(139,94,46,.2);display:flex;align-items:center;gap:12px}.home-head{justify-content:space-between;padding-top:24px}.title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px}.sub{font-size:12px;color:var(--muted)}.back{width:38px;height:38px;border-radius:12px;background:var(--ink3);display:grid;place-items:center;cursor:pointer;border:1px solid var(--ink4)}.back:active,.btn:active,.card:active,.nav-item:active{transform:scale(.97)}.scroll{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px}.screen.with-nav .scroll{padding-bottom:12px}.nav{display:grid;grid-template-columns:repeat(5,1fr);background:var(--ink2);border-top:1px solid rgba(139,94,46,.2);padding:8px 2px calc(10px + var(--safe));gap:0}.nav-item{border:none;background:none;color:var(--muted);font-family:Outfit,sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:.2px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border-radius:12px;padding:5px 0}.nav-item i{font-size:21px}.nav-item.active{color:var(--gold);font-weight:700;background:rgba(139,94,46,.08)}
+.btn{border:none;border-radius:14px;padding:14px 18px;font-weight:700;font-family:Outfit,sans-serif;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--gold),#684019);color:#fff;box-shadow:0 7px 18px rgba(139,94,46,.28)}.btn.ghost{background:#fff8ee;color:var(--gold);border:1px solid var(--ink4);box-shadow:none}.btn.green{background:linear-gradient(135deg,#2e7d4f,#1e5c38)}.btn.blue{background:linear-gradient(135deg,#2563eb,#1d4ed8)}.btn.red{background:#fff4f2;color:var(--red);border:1px solid rgba(192,57,43,.3);box-shadow:none}.btn.small{padding:9px 12px;font-size:12px;border-radius:11px}.btn:disabled{opacity:.65;cursor:not-allowed;filter:grayscale(.2)}input,textarea{width:100%;background:#fff8ee;border:1px solid var(--ink4);border-radius:14px;padding:13px 14px;font-family:Outfit,sans-serif;font-size:15px;color:var(--cream);outline:none}input:focus,textarea:focus{border-color:var(--gold)}label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700}.field{display:flex;flex-direction:column;gap:6px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.auth{padding:28px;display:flex;flex-direction:column;gap:15px}.logo{width:88px;height:88px;border-radius:25px;background:linear-gradient(145deg,#fff8ee,var(--ink2));display:grid;place-items:center;margin:0 auto 20px;border:1px solid var(--ink4);box-shadow:0 12px 35px rgba(139,94,46,.18)}.logo i{font-size:48px;color:var(--gold)}.splash{justify-content:center;text-align:center;padding:36px}.splash h1{font-family:'Cormorant Garamond',serif;font-size:48px}.splash p{color:var(--muted);text-transform:uppercase;letter-spacing:2px;font-size:12px;margin-bottom:44px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card,.book,.panel{background:#fff8ee;border:1px solid var(--ink3);border-radius:var(--r);padding:15px}.card{cursor:pointer;display:flex;flex-direction:column;gap:9px}.card i{font-size:24px;color:var(--gold)}.card b{font-size:14px}.card span{font-size:12px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stat{text-align:center;padding:13px 4px;background:#fff8ee;border:1px solid var(--ink3);border-radius:15px}.stat b{display:block;font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold)}.stat span{font-size:9px;text-transform:uppercase;color:var(--muted);font-weight:700}.book{display:flex;gap:13px;cursor:pointer;align-items:flex-start}.cover{width:54px;height:78px;border-radius:9px;object-fit:cover;background:var(--ink3);box-shadow:0 5px 12px rgba(0,0,0,.16);flex-shrink:0}.book-info{min-width:0;flex:1}.book-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.book-author{font-size:12px;color:var(--muted);margin:4px 0 8px}.meta{display:flex;gap:6px;flex-wrap:wrap}.badge{font-size:10px;text-transform:uppercase;border-radius:999px;padding:4px 8px;font-weight:700}.ok{background:rgba(46,125,79,.12);color:var(--green);border:1px solid rgba(46,125,79,.25)}.no{background:rgba(192,57,43,.1);color:var(--red);border:1px solid rgba(192,57,43,.22)}.gold{background:rgba(139,94,46,.12);color:var(--gold);border:1px solid rgba(139,94,46,.2)}.blue-b{background:rgba(37,99,235,.1);color:var(--blue);border:1px solid rgba(37,99,235,.2)}.hero{height:245px;border-radius:22px;object-fit:contain;background:#eadfcc;padding:10px}.detail-name{font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1}.desc{font-size:14px;line-height:1.7;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:45px 20px}.empty i{font-size:46px;opacity:.4}.toast{position:absolute;left:18px;right:18px;top:80px;background:#3b2a1a;color:white;border-radius:14px;padding:13px 14px;z-index:99;display:none;gap:9px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.3);font-size:13px}.avatar{width:48px;height:48px;border-radius:50%;background:#fff8ee;border:2px solid rgba(139,94,46,.35);display:grid;place-items:center;font-size:24px;cursor:pointer}.profile-avatar{width:88px;height:88px;font-size:44px;margin:auto}.list-actions{display:flex;gap:8px;margin-top:10px}.section-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}.history-line{font-size:12px;color:var(--muted);margin-top:4px}.searchbox{position:sticky;top:0;z-index:3}.tabs{display:flex;gap:8px}.tab{flex:1}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="toast" class="toast"><i class="ti ti-check"></i><span></span></div>
+
+<section id="s-splash" class="screen active splash">
+  <div class="logo"><i class="ti ti-books"></i></div>
+  <h1>BiblioApp</h1><p>Biblioteca escolar digital</p>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <button class="btn" onclick="go('s-login')"><i class="ti ti-login"></i>Iniciar sesión</button>
+    <button class="btn ghost" onclick="go('s-register')"><i class="ti ti-user-plus"></i>Crear cuenta</button>
+  </div>
+</section>
+
+<section id="s-login" class="screen">
+  <div class="topbar"><div class="back" onclick="go('s-splash')"><i class="ti ti-arrow-left"></i></div><div><div class="title">Bienvenido</div><div class="sub">Entra con tu cuenta creada</div></div></div>
+  <div class="auth">
+    <div class="field"><label>Correo electrónico</label><input id="login-email" type="email" placeholder="correo@escuela.mx"></div>
+    <div class="field"><label>Contraseña</label><input id="login-pass" type="password" placeholder="Tu contraseña"></div>
+    <button class="btn" onclick="doLogin()"><i class="ti ti-login"></i>Iniciar sesión</button>
+    <button class="btn ghost" onclick="fillDemo()"><i class="ti ti-user-check"></i>Usar cuenta demo</button>
+    <p class="sub" style="text-align:center">¿No tienes cuenta? <b style="color:var(--gold);cursor:pointer" onclick="go('s-register')">Regístrate</b></p>
+  </div>
+</section>
+
+<section id="s-register" class="screen">
+  <div class="topbar"><div class="back" onclick="go('s-splash')"><i class="ti ti-arrow-left"></i></div><div><div class="title">Crear cuenta</div><div class="sub">Se guarda localmente en este navegador</div></div></div>
+  <div class="auth">
+    <div class="row2"><div class="field"><label>Nombre</label><input id="reg-nombre" placeholder="Luis"></div><div class="field"><label>Apellido</label><input id="reg-apellido" placeholder="Monroy"></div></div>
+    <div class="field"><label>Correo</label><input id="reg-email" type="email" placeholder="correo@escuela.mx"></div>
+    <div class="row2"><div class="field"><label>Matrícula</label><input id="reg-matricula" placeholder="2024XXXXX"></div><div class="field"><label>Grupo</label><input id="reg-grado" placeholder="6° A"></div></div>
+    <div class="field"><label>Contraseña</label><input id="reg-pass" type="password" placeholder="Mínimo 4 caracteres"></div>
+    <div class="field"><label>Confirmar contraseña</label><input id="reg-pass2" type="password" placeholder="Repite contraseña"></div>
+    <button class="btn green" onclick="doRegister()"><i class="ti ti-user-check"></i>Crear mi cuenta</button>
+  </div>
+</section>
+
+<section id="s-home" class="screen with-nav">
+  <div class="home-head"><div><div class="sub" id="home-greet">Hola</div><div class="title" id="home-name">Usuario</div></div><div class="avatar" onclick="go('s-profile')" id="home-avatar">🎓</div></div>
+  <div class="scroll">
+    <div class="stats"><div class="stat"><b id="stat-books">11</b><span>Libros</span></div><div class="stat"><b id="stat-favs">0</b><span>Favs</span></div><div class="stat"><b id="stat-res">0</b><span>Reservas</span></div><div class="stat"><b id="stat-loans">0</b><span>Historial</span></div></div>
+    <div class="grid">
+      <div class="card" onclick="go('s-catalog')"><i class="ti ti-library"></i><b>Catálogo</b><span>Todos los libros</span></div>
+      <div class="card" onclick="go('s-search')"><i class="ti ti-search"></i><b>Buscar</b><span>Título, autor o categoría</span></div>
+      <div class="card" onclick="go('s-reservas')"><i class="ti ti-bookmark"></i><b>Reservas</b><span>Ver y cancelar</span></div>
+      <div class="card" onclick="go('s-history')"><i class="ti ti-history"></i><b>Historial</b><span>Préstamos hechos</span></div>
+    </div>
+    <div><div class="section-title">Agregados recientemente</div><div id="recent-list" style="display:flex;flex-direction:column;gap:10px;margin-top:10px"></div></div>
+  </div>
+  <nav class="nav"></nav>
+</section>
+
+<section id="s-catalog" class="screen with-nav"><div class="topbar"><div class="back" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><div class="title">Catálogo</div></div><div id="catalog-list" class="scroll"></div><nav class="nav"></nav></section>
+<section id="s-search" class="screen with-nav"><div class="topbar"><div class="back" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><div class="title">Buscar</div></div><div class="scroll"><input class="searchbox" id="search-input" oninput="renderSearch()" placeholder="Busca un libro, autor o materia..."><div id="search-list" style="display:flex;flex-direction:column;gap:10px"></div></div><nav class="nav"></nav></section>
+<section id="s-favorites" class="screen with-nav"><div class="topbar"><div class="back" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><div class="title">Favoritos</div></div><div id="fav-list" class="scroll"></div><nav class="nav"></nav></section>
+<section id="s-reservas" class="screen with-nav"><div class="topbar"><div class="back" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><div class="title">Mis reservas</div></div><div id="res-list" class="scroll"></div><nav class="nav"></nav></section>
+<section id="s-history" class="screen with-nav"><div class="topbar"><div class="back" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><div class="title">Historial</div></div><div id="history-list" class="scroll"></div><nav class="nav"></nav></section>
+
+<section id="s-detail" class="screen"><div class="topbar"><div class="back" id="detail-back"><i class="ti ti-arrow-left"></i></div><div class="title">Detalle del libro</div></div><div id="detail" class="scroll"></div></section>
+
+<section id="s-profile" class="screen with-nav">
+  <div class="topbar"><div class="back" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><div class="title">Mi perfil</div></div>
+  <div class="scroll">
+    <div style="text-align:center" class="panel"><div class="avatar profile-avatar" id="profile-avatar" onclick="changeAvatar()">🎓</div><h2 class="detail-name" id="profile-name" style="margin-top:12px">Usuario</h2><p class="sub" id="profile-email"></p></div>
+    <div class="panel"><div class="section-title">Información escolar</div><p id="profile-school" class="desc"></p></div>
+    <button class="btn ghost" onclick="changeAvatar()"><i class="ti ti-mood-smile"></i>Cambiar avatar</button>
+    <button class="btn red" onclick="logout()"><i class="ti ti-logout"></i>Cerrar sesión</button>
+  </div><nav class="nav"></nav>
+</section>
+</div>
+
+<script>
+const books=[
+{id:1,title:'Cien años de soledad',author:'Gabriel García Márquez',cat:'Literatura',isbn:'9780307474728',status:true,desc:'Una saga familiar en Macondo que mezcla realidad, memoria y fantasía a través de varias generaciones de la familia Buendía.'},
+{id:2,title:'El principito',author:'Antoine de Saint-Exupéry',cat:'Literatura',isbn:'9780156012195',status:true,desc:'Un pequeño príncipe viaja por distintos planetas y aprende sobre amistad, amor, responsabilidad y lo esencial de la vida.'},
+{id:3,title:'Breve historia del tiempo',author:'Stephen Hawking',cat:'Ciencia',isbn:'9780553380163',status:false,desc:'Introducción clara a la cosmología, los agujeros negros, el Big Bang y las preguntas más grandes sobre el universo.'},
+{id:4,title:'El origen de las especies',author:'Charles Darwin',cat:'Ciencia',isbn:'9780451529060',status:true,desc:'Obra fundamental sobre evolución y selección natural, con ideas que transformaron la biología moderna.'},
+{id:5,title:'Sapiens',author:'Yuval Noah Harari',cat:'Historia',isbn:'9780062316097',status:true,desc:'Recorrido por la historia humana, desde los primeros sapiens hasta la sociedad tecnológica contemporánea.'},
+{id:6,title:'Historia de México',author:'Héctor Aguilar Camín',cat:'Historia',isbn:'9789681907235',status:false,desc:'Revisión de procesos, conflictos y transformaciones que ayudaron a formar el México moderno.'},
+{id:7,title:'Álgebra lineal',author:'Gilbert Strang',cat:'Matemáticas',isbn:'9780980232776',status:true,desc:'Texto de álgebra lineal con aplicaciones en ingeniería, física, computación y análisis de datos.'},
+{id:8,title:'Cálculo diferencial',author:'James Stewart',cat:'Matemáticas',isbn:'9781285740621',status:true,desc:'Fundamentos de funciones, límites, derivadas y aplicaciones del cálculo diferencial.'},
+{id:9,title:'Introducción a Python',author:'Eric Matthes',cat:'Tecnología',isbn:'9781593279288',status:true,desc:'Guía para aprender Python desde cero con proyectos prácticos, juegos y manejo de datos.'},
+{id:10,title:'Inteligencia Artificial',author:'Stuart Russell',cat:'Tecnología',isbn:'9780134610993',status:false,desc:'Libro de referencia sobre búsqueda, aprendizaje automático, agentes inteligentes y el futuro de la IA.'},
+{id:11,title:'El arte de la guerra',author:'Sun Tzu',cat:'Otros',isbn:'9781590302255',status:true,desc:'Tratado clásico sobre estrategia, liderazgo, planeación y toma de decisiones.'}
+];
+const navs=[['s-home','ti-home-2','Inicio'],['s-catalog','ti-library','Catálogo'],['s-favorites','ti-heart','Favs'],['s-reservas','ti-bookmark','Reservas'],['s-profile','ti-user-circle','Perfil']];
+let currentScreen='s-splash', previousScreen='s-home', currentBook=null, detailReturnScreen='s-home';
+const $=id=>document.getElementById(id);
+const cover=b=>`https://covers.openlibrary.org/b/isbn/${b.isbn}-M.jpg?default=false`;
+const today=()=>new Date().toLocaleDateString('es-MX',{year:'numeric',month:'short',day:'numeric'});
+const dueDate=()=>{let d=new Date();d.setDate(d.getDate()+7);return d.toLocaleDateString('es-MX',{year:'numeric',month:'short',day:'numeric'})};
+function users(){return JSON.parse(localStorage.getItem('ba_users')||'[]')}
+function saveUsers(u){localStorage.setItem('ba_users',JSON.stringify(u))}
+function user(){return JSON.parse(localStorage.getItem('ba_current')||'null')}
+function uid(){return user()?.email||'invitado'}
+function key(k){return `ba_${k}_${uid()}`}
+function getSet(k){return new Set(JSON.parse(localStorage.getItem(key(k))||'[]'))}
+function setSet(k,s){localStorage.setItem(key(k),JSON.stringify([...s]))}
+function getArr(k){return JSON.parse(localStorage.getItem(key(k))||'[]')}
+function setArr(k,a){localStorage.setItem(key(k),JSON.stringify(a))}
+function toast(msg,type='success'){const t=$('toast');t.querySelector('span').textContent=msg;t.querySelector('i').className= type==='error'?'ti ti-alert-circle':'ti ti-check';t.style.display='flex';clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.style.display='none',2400)}
+function initDemo(){let u=users();if(!u.some(x=>x.email==='demo@escuela.mx')){u.push({name:'Ana García',email:'demo@escuela.mx',pass:'1234',matricula:'2024001234',grado:'3° A',avatar:'🎓'});saveUsers(u)}}
+function fillDemo(){$('login-email').value='demo@escuela.mx';$('login-pass').value='1234';toast('Cuenta demo lista: demo@escuela.mx / 1234')}
+function doRegister(){const name=($('reg-nombre').value+' '+$('reg-apellido').value).trim(),email=$('reg-email').value.trim().toLowerCase(),pass=$('reg-pass').value,pass2=$('reg-pass2').value,matricula=$('reg-matricula').value.trim(),grado=$('reg-grado').value.trim();if(!name||!email||!pass){toast('Completa nombre, correo y contraseña','error');return}if(pass.length<4){toast('La contraseña debe tener mínimo 4 caracteres','error');return}if(pass!==pass2){toast('Las contraseñas no coinciden','error');return}let u=users();if(u.some(x=>x.email===email)){toast('Ese correo ya está registrado','error');return}let nu={name,email,pass,matricula,grado,avatar:'🎓'};u.push(nu);saveUsers(u);localStorage.setItem('ba_current',JSON.stringify(nu));toast('Cuenta creada correctamente');go('s-home')}
+function doLogin(){const email=$('login-email').value.trim().toLowerCase(),pass=$('login-pass').value;const found=users().find(x=>x.email===email&&x.pass===pass);if(!found){toast('Correo o contraseña incorrectos. Crea una cuenta primero.','error');return}localStorage.setItem('ba_current',JSON.stringify(found));toast('Bienvenido, '+found.name);go('s-home')}
+function logout(){localStorage.removeItem('ba_current');go('s-splash');toast('Sesión cerrada')}
+function requireLogin(){if(!user()){toast('Primero inicia sesión o crea una cuenta','error');go('s-login');return false}return true}
+function go(id){if(!['s-splash','s-login','s-register'].includes(id)&&!requireLogin())return;document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');previousScreen=currentScreen;currentScreen=id;renderNavs();if(id==='s-home')renderHome();if(id==='s-catalog')renderCatalog();if(id==='s-search')renderSearch();if(id==='s-favorites')renderFavs();if(id==='s-reservas')renderReservations();if(id==='s-history')renderHistory();if(id==='s-profile')renderProfile()}
+function renderNavs(){document.querySelectorAll('nav.nav').forEach(nav=>{nav.innerHTML=navs.map(([id,ic,txt])=>`<button class="nav-item ${currentScreen===id?'active':''}" onclick="go('${id}')"><i class="ti ${ic}"></i><span>${txt}</span></button>`).join('')})}
+function renderHome(){const u=user();$('home-name').textContent=u.name;$('home-avatar').textContent=u.avatar||'🎓';$('home-greet').textContent=new Date().getHours()<12?'Buenos días':new Date().getHours()<19?'Buenas tardes':'Buenas noches';$('stat-books').textContent=books.length;$('stat-favs').textContent=getSet('favs').size;$('stat-res').textContent=getArr('reservas').length;$('stat-loans').textContent=getArr('history').length;$('recent-list').innerHTML=books.slice(0,4).map(bookCard).join('')}
+function bookCard(b){const res=getArr('reservas').some(r=>r.id===b.id);return `<div class="book" onclick="openBook(${b.id})"><img class="cover" src="${cover(b)}" onerror="this.src='https://placehold.co/108x156/ede3d5/8b5e2e?text=Libro'"><div class="book-info"><div class="book-title">${b.title}</div><div class="book-author">${b.author}</div><div class="meta"><span class="badge gold">${b.cat}</span><span class="badge ${b.status?'ok':'no'}">${b.status?'Disponible':'Prestado'}</span>${res?'<span class="badge blue-b">Reservado</span>':''}</div></div></div>`}
+function renderCatalog(){ $('catalog-list').innerHTML=books.map(bookCard).join('') }
+function renderSearch(){const q=($('search-input')?.value||'').toLowerCase();let data=books.filter(b=>(b.title+b.author+b.cat).toLowerCase().includes(q));$('search-list').innerHTML=data.length?data.map(bookCard).join(''):`<div class="empty"><i class="ti ti-search-off"></i><p>No encontré libros con esa búsqueda.</p></div>`}
+function openBook(id, keepReturn=false){
+  if(!keepReturn){
+    detailReturnScreen = currentScreen && currentScreen !== 's-detail' ? currentScreen : (detailReturnScreen || 's-catalog');
+  }
+
+  currentBook = id;
+  const b = books.find(x=>x.id===id);
+  const f = getSet('favs');
+  const reserved = getArr('reservas').some(r=>r.id===id);
+
+  $('detail-back').onclick = () => {
+    const target = detailReturnScreen && detailReturnScreen !== 's-detail' ? detailReturnScreen : 's-home';
+    go(target);
+  };
+
+  $('detail').innerHTML = `<img class="hero" src="${cover(b)}" onerror="this.src='https://placehold.co/260x360/ede3d5/8b5e2e?text=Libro'"><div><div class="detail-name">${b.title}</div><div class="book-author" style="font-size:15px">${b.author}</div></div><div class="meta"><span class="badge gold">${b.cat}</span><span class="badge ${b.status?'ok':'no'}">${b.status?'Disponible':'No disponible'}</span>${reserved?'<span class="badge blue-b">Ya reservado</span>':''}</div><div class="panel"><b>Descripción</b><p class="desc">${b.desc}</p></div><button class="btn ${reserved?'ghost':'blue'}" onclick="toggleReservation(${b.id})" ${!b.status&&!reserved?'disabled':''}><i class="ti ${reserved?'ti-bookmark-off':'ti-bookmark-plus'}"></i>${reserved?'Quitar reserva':(b.status?'Reservar libro':'No disponible para reservar')}</button><button class="btn ghost" onclick="toggleFav(${b.id});openBook(${b.id}, true)"><i class="ti ${f.has(id)?'ti-heart-filled':'ti-heart'}"></i>${f.has(id)?'Quitar de favoritos':'Agregar a favoritos'}</button><button class="btn green" onclick="markLoan(${b.id})"><i class="ti ti-checkup-list"></i>Marcar como préstamo</button>`;
+
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('s-detail').classList.add('active');
+  currentScreen = 's-detail';
+}
+function toggleFav(id){let f=getSet('favs');f.has(id)?f.delete(id):f.add(id);setSet('favs',f);toast(f.has(id)?'Agregado a favoritos':'Quitado de favoritos')}
+function toggleReservation(id){let r=getArr('reservas');const b=books.find(x=>x.id===id);if(r.some(x=>x.id===id)){r=r.filter(x=>x.id!==id);toast('Reserva cancelada')}else{r.push({id,date:today(),due:dueDate()});toast('Libro reservado correctamente')}setArr('reservas',r);openBook(id, true)}
+function cancelReservation(id){let r=getArr('reservas').filter(x=>x.id!==id);setArr('reservas',r);toast('Reserva eliminada');renderReservations();if(currentScreen==='s-home')renderHome()}
+function renderReservations(){let r=getArr('reservas');$('res-list').innerHTML=r.length?r.map(x=>{let b=books.find(y=>y.id===x.id);return `<div class="book"><img class="cover" src="${cover(b)}" onerror="this.src='https://placehold.co/108x156/ede3d5/8b5e2e?text=Libro'"><div class="book-info"><div class="book-title">${b.title}</div><div class="book-author">${b.author}</div><div class="history-line">Reservado: ${x.date}<br>Vence: ${x.due}</div><div class="list-actions"><button class="btn small blue" onclick="openBook(${b.id})">Ver</button><button class="btn small red" onclick="cancelReservation(${b.id})">Cancelar</button></div></div></div>`}).join(''):`<div class="empty"><i class="ti ti-bookmark-off"></i><p>No tienes libros reservados. Ve al catálogo y toca “Reservar libro”.</p></div>`}
+function renderFavs(){let f=[...getSet('favs')].map(id=>books.find(b=>b.id===id)).filter(Boolean);$('fav-list').innerHTML=f.length?f.map(bookCard).join(''):`<div class="empty"><i class="ti ti-heart-off"></i><p>No tienes favoritos todavía.</p></div>`}
+function markLoan(id){let b=books.find(x=>x.id===id);let h=getArr('history');h.unshift({id,date:today(),title:b.title,author:b.author});setArr('history',h);toast('Agregado al historial de préstamos')}
+function renderHistory(){let h=getArr('history');$('history-list').innerHTML=h.length?h.map(x=>`<div class="panel"><b>${x.title}</b><div class="history-line">${x.author}<br>Préstamo registrado: ${x.date}</div></div>`).join(''):`<div class="empty"><i class="ti ti-history-off"></i><p>Aún no hay préstamos registrados.</p></div>`}
+function renderProfile(){const u=user();$('profile-avatar').textContent=u.avatar||'🎓';$('profile-name').textContent=u.name;$('profile-email').textContent=u.email;$('profile-school').innerHTML=`Matrícula: <b>${u.matricula||'Sin capturar'}</b><br>Grado / Grupo: <b>${u.grado||'Sin capturar'}</b><br>Reservas activas: <b>${getArr('reservas').length}</b><br>Favoritos: <b>${getSet('favs').size}</b>`}
+function changeAvatar(){const av=['🎓','📚','🦉','✨','🌟','🔬','🎨','🏆','🌙','🦋'];let current=user();let idx=(av.indexOf(current.avatar)+1)%av.length;current.avatar=av[idx];localStorage.setItem('ba_current',JSON.stringify(current));let u=users().map(x=>x.email===current.email?current:x);saveUsers(u);renderProfile();toast('Avatar cambiado')}
+initDemo();renderNavs();
+</script>
+</body>
+</html>
